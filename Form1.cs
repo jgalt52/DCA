@@ -65,54 +65,42 @@ namespace DenverCrimeApp
 
 
 
-        /*    GMarkerGoogle gmaplist = csv.Select(x =>
+           List<GMarkerGoogle> gmaplist = csv.Select(x =>
             {
 
-                double GeoLongD = Convert.ToDouble(x.GeoLong);
-                double GeoLatD = Convert.ToDouble(x.GeoLat);
-                PointLatLng lambdapoint = new PointLatLng(GeoLatD, GeoLatD);
+                PointLatLng lambdapoint = new PointLatLng(Convert.ToDouble(x.GeoLat), Convert.ToDouble(x.GeoLong));
 
-                return new GMarkerGoogle(lambdapoint, GMarkerGoogleType.red);
+                return new GMarkerGoogle(lambdapoint, GMarkerGoogleType.red)
+                {
+                    
+                };
 
-            }) */
+            }).ToList(); 
             
-
+    
             //MessageBox.Show(csv[2].objectspoint.ToString());
 
 
-            GMapOverlay markersOverlay = new GMapOverlay("Markers");
+            GMapOverlay markers = new GMapOverlay("markers");
 
-            foreach (Crimes crime in csv)
+            foreach (GMarkerGoogle gmark in gmaplist)
             {
- 
-                        double GeoLongD = Convert.ToDouble(crime.GeoLong);
-                        double GeoLatD = Convert.ToDouble(crime.GeoLat);
-                        PointLatLng objectspoint = new PointLatLng(GeoLatD, GeoLatD);
-                        GMarkerGoogle marker55 = new GMarkerGoogle(objectspoint, GMarkerGoogleType.red);
-                        markersOverlay.Markers.Add(marker55);
-                        
-
-                        
+               // MessageBox.Show(gmark.ToString());
+                        markers.Markers.Add(gmark);
+        
             }
-            gmap.Overlays.Add(markersOverlay);
 
-
-
-          
-            
-           
-
-            
+            gmap.Overlays.Add(markers);
 
 
             GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(39.67510490, -104.99164970), GMarkerGoogleType.purple);
             GMarkerGoogle marker2 = new GMarkerGoogle(new PointLatLng(39.67510490, -104.91057350), GMarkerGoogleType.blue);
             GMarkerGoogle marker4 = new GMarkerGoogle(new PointLatLng(39.82405790, -104.77523330), GMarkerGoogleType.green);
            // GMarkerGoogle marker3 = new GMarkerGoogle(new PointLatLng(latinput, longinput), GMarkerGoogleType.purple);
-            markersOverlay.Markers.Add(marker);
-            markersOverlay.Markers.Add(marker2);
+            //markersOverlay.Markers.Add(marker);
+           // markersOverlay.Markers.Add(marker2);
            // markersOverlay.Markers.Add(marker3);
-            markersOverlay.Markers.Add(marker4);
+          //  markersOverlay.Markers.Add(marker4);
            
            
       
