@@ -23,7 +23,7 @@ namespace DenverCrimeApp
       
         public GMarkerGoogle newmarkerObject { get; set; }
        
-
+        public GMarkerGoogleType markerCat { get; set; }
         //GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(39.67510490, -104.99164970), GMarkerGoogleType.red);
     }
 }

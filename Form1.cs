@@ -21,6 +21,9 @@ namespace DenverCrimeApp
     
     public partial class Form1 : Form
     {
+
+        List<string> crimebox = new List<string>();
+
         public Form1()
         {
 
@@ -39,12 +42,27 @@ namespace DenverCrimeApp
 
         private void Search_map_Click(object sender, EventArgs e)
         {
+            // when you click to button it saves the list of crimes into a list
             
+            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                if (checkedListBox1.GetItemCheckState(i) == CheckState.Checked)
+                {
+                    crimebox.Add(checkedListBox1.Items[i].ToString());
+                    //MessageBox.Show(checkedListBox1.Items[i].ToString());
+
+                }
+           foreach(String y in crimebox)
+            {
+                Console.WriteLine(y);
+            }
+            gMapControl2_Load(sender, e);
         }
 
+
+        
         private void gMapControl2_Load(object sender, EventArgs e)
         {
-
+          
             // Basic Settings for greatmaps app
             gmap.MapProvider = GMapProviders.GoogleMap;
             gmap.Position = new PointLatLng(39.73686290, -104.99164970);
@@ -70,18 +88,21 @@ namespace DenverCrimeApp
             }).ToList();
 
 
+            // Read in the checkboxes for what to display
 
+           
 
+           
             // Create a new list of markers using the csv list created above
            List<GMarkerGoogle> gmaplist = csv.Select(x =>
             {
 
-                //lets set the color type based crime type
+                //Some error handling just incase loc is weird just set it to 0 0
                 if(x.GeoLat == ""|| x.GeoLong == "") {
                     x.GeoLong = "0.0";
                     x.GeoLat = "0.0";}
 
-
+                //lets set the color type based crime type
                 PointLatLng lambdapoint = new PointLatLng(Convert.ToDouble(x.GeoLat), Convert.ToDouble(x.GeoLong));
 
                 switch (x.OffenseCat)
@@ -103,7 +124,6 @@ namespace DenverCrimeApp
 
                     case "auto-theft":
                         return new GMarkerGoogle(lambdapoint, GMarkerGoogleType.orange_dot) { };
-
 
                     case "white-collar-crime":
                         return new GMarkerGoogle(lambdapoint, GMarkerGoogleType.white_small) { };
@@ -165,6 +185,11 @@ namespace DenverCrimeApp
             gmap.Overlays.Add(markers);
 
            // GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(39.67510490, -104.99164970), GMarkerGoogleType.purple);
+
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }
